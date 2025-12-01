@@ -24,7 +24,7 @@ public class AlumnoController {
     private AlumnoService alumnoService;
 
     @Operation(summary = "Método que crea alumno")
-    @PostMapping("/persoa")
+    @PostMapping("/alumno")
     public Alumno crearAlumno(Alumno alumno) {
         return alumnoService.crearOuActualizarAlumno(alumno);
     }
