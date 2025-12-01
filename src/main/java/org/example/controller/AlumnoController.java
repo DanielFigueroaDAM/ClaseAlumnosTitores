@@ -1,11 +1,19 @@
 package org.example.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import org.example.model.Alumno;
 import org.example.repository.AlumnoRepository;
 import org.example.service.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/alumno")
@@ -15,6 +23,29 @@ public class AlumnoController {
     @Autowired
     private AlumnoService alumnoService;
 
+    @Operation(summary = "Método que crea alumno")
+    @PostMapping("/persoa")
+    public Alumno crearAlumno(Alumno alumno) {
+        return alumnoService.crearOuActualizarAlumno(alumno);
+    }
+    @Operation(summary = "Método que elimina alumno")
+    @PostMapping("/eliminar/{id}")
+    public void eliminarAlumno(Long id) {
+        alumnoService.eliminarAlumno(id);
+    }
+
+    @Operation(summary = "Listar alumnos")
+    @GetMapping("/listar")
+    public List<Alumno> listarAlumnos() {
+        return alumnoService.listarAlumnos();
+    }
+
+    @Operation(summary = "Obter alumno por ID")
+    @GetMapping("/obter/{id}")
+    public ResponseEntity<Alumno> obterAlumnoPorId(Long id) { // preguntar porq se retonra un responseEntity
+        Optional<Alumno> alumno = alumnoService.obtenerAlumnoPorId(id);
+        return alumno.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()); //preguntar tambien esto
+    }
 
 
 

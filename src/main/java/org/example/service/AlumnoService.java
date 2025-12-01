@@ -5,6 +5,9 @@ import org.example.repository.AlumnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 public class AlumnoService {
     private final AlumnoRepository alumnoRepository;
 
@@ -22,10 +25,10 @@ public class AlumnoService {
         alumnoRepository.deleteById(id);
     }
 
-
-
-
-
-
-
+    public List<Alumno> listarAlumnos() {
+        return alumnoRepository.findAll();
+    }
+    public Optional<Alumno> obtenerAlumnoPorId(Long id) {
+        return alumnoRepository.findById(id);
+    }
 }
