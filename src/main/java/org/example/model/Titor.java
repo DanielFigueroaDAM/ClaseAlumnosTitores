@@ -2,6 +2,8 @@ package org.example.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "titor")
 public class Titor {
@@ -12,6 +14,9 @@ public class Titor {
     private String nome;
     @Column(name = "apelidos", length = 150, nullable = false)
     String apelidos;
+
+    @OneToMany(mappedBy = "titor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Alumno> alumnos;
 
     public Titor() {
     }
