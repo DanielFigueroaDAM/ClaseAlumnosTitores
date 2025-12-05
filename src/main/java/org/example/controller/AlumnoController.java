@@ -7,10 +7,7 @@ import org.example.repository.AlumnoRepository;
 import org.example.service.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,12 +24,12 @@ public class AlumnoController {
 
     @Operation(summary = "Método que crea alumno")
     @PostMapping("/alumno")
-    public Alumno crearAlumno(Alumno alumno) {
+    public Alumno crearAlumno(@RequestBody Alumno alumno) {
         return alumnoService.crearOuActualizarAlumno(alumno);
     }
     @Operation(summary = "Método que elimina alumno")
     @PostMapping("/eliminar/{id}")
-    public void eliminarAlumno(Long id) {
+    public void eliminarAlumno(@PathVariable Long id) {
         alumnoService.eliminarAlumno(id);
     }
 
@@ -44,7 +41,7 @@ public class AlumnoController {
 
     @Operation(summary = "Obter alumno por ID")
     @GetMapping("/obter/{id}")
-    public ResponseEntity<Alumno> obterAlumnoPorId(Long id) { // preguntar porq se retonra un responseEntity
+    public ResponseEntity<Alumno> obterAlumnoPorId(@PathVariable Long id) { // preguntar porq se retonra un responseEntity
         Optional<Alumno> alumno = alumnoService.obtenerAlumnoPorId(id);
         return alumno.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()); //preguntar tambien esto
     }

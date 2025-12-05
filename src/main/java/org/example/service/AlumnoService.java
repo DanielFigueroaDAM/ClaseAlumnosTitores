@@ -20,11 +20,11 @@ public class AlumnoService {
     }
     @Transactional
     public Alumno crearOuActualizarAlumno(Alumno alumno) {
-
-       Titor t = new Titor();
-       t.setId(alumno.getTitor().getId());
-
-
+        if (alumno.getTitor() != null && alumno.getTitor().getId() != null) {
+            Titor t = new Titor();
+            t.setId(alumno.getTitor().getId());
+            alumno.setTitor(t); // asigna el t con solo id (mejor cargar el Titor gestionado desde la BD)
+        }
         return alumnoRepository.save(alumno);
     }
 
