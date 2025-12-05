@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.model.Alumno;
 import org.example.model.Titor;
 import org.example.repository.AlumnoRepository;
+import org.example.repository.TitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,18 +14,25 @@ import java.util.Optional;
 @Service
 public class AlumnoService {
     private final AlumnoRepository alumnoRepository;
-
+    private final TitorRepository titorRepository;
     @Autowired
-    public AlumnoService(AlumnoRepository alumnoRepository) {
+    public AlumnoService(AlumnoRepository alumnoRepository, TitorRepository titorRepository) {
         this.alumnoRepository = alumnoRepository;
+        this.titorRepository = titorRepository;
     }
     @Transactional
     public Alumno crearOuActualizarAlumno(Alumno alumno) {
-        if (alumno.getTitor() != null && alumno.getTitor().getId() != null) {
-            Titor t = new Titor();
-            t.setId(alumno.getTitor().getId());
-            alumno.setTitor(t); // asigna el t con solo id (mejor cargar el Titor gestionado desde la BD)
+        if (alumno.getTitor() == null || alumno.getTitor().getId() == null) {
+            throw new RuntimeException("Alumno debe tener un Titor asignado");
         }
+
+        // Buscar Titor existente
+        Titor titor = titorRepository.findById(alumno.getTitor().getId())
+                .orElseThrow(() -> new RuntimeException(
+                        "Titor no encontrado con ID: " + alumno.getTitor().getId()
+                ));
+
+        alumno.setTitor(titor);
         return alumnoRepository.save(alumno);
     }
 

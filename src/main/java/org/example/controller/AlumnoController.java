@@ -41,12 +41,15 @@ public class AlumnoController {
 
     @Operation(summary = "Obter alumno por ID")
     @GetMapping("/obter/{id}")
-    public ResponseEntity<Alumno> obterAlumnoPorId(@PathVariable Long id) { // preguntar porq se retonra un responseEntity
+    public ResponseEntity<Alumno> obterAlumnoPorId(@PathVariable Long id) {
         Optional<Alumno> alumno = alumnoService.obtenerAlumnoPorId(id);
-        return alumno.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()); //preguntar tambien esto
+        return alumno.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
-
+    @Operation(summary = "Listar alumnos por Titor ID")
+    @GetMapping("/listarPorTitor/{titorId}")
+    public List<Alumno> listarAlumnosPorTitorId(@PathVariable Long titorId) {
+        return alumnoRepository.findByTitorId(titorId);
+    }
 
 }

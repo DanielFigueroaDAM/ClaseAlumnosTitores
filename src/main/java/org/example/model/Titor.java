@@ -16,7 +16,7 @@ public class Titor {
     @Column(name = "apelidos", length = 150, nullable = false)
     String apelidos;
 
-    @OneToMany(mappedBy = "titor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "titor", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Alumno> alumnos;
 
     public Titor() {
