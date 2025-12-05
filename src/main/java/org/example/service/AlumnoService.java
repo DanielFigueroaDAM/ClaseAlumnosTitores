@@ -1,13 +1,16 @@
 package org.example.service;
 
 import org.example.model.Alumno;
+import org.example.model.Titor;
 import org.example.repository.AlumnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class AlumnoService {
     private final AlumnoRepository alumnoRepository;
 
@@ -17,6 +20,11 @@ public class AlumnoService {
     }
     @Transactional
     public Alumno crearOuActualizarAlumno(Alumno alumno) {
+
+       Titor t = new Titor();
+       t.setId(alumno.getTitor().getId());
+
+
         return alumnoRepository.save(alumno);
     }
 

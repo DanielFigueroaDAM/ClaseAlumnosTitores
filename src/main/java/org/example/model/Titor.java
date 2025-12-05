@@ -9,6 +9,7 @@ import java.util.List;
 public class Titor {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
+    @Column(name = "id_titor")
     private Long id;
     @Column(name = "nome", length = 100, nullable = false)
     private String nome;

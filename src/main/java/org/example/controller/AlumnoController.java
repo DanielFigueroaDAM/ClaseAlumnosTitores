@@ -16,8 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/alumno")
+@RequestMapping(AlumnoController.MAPPING)
 public class AlumnoController {
+
+    public static final String MAPPING = "/baseAlumno";
     @Autowired
     private AlumnoRepository alumnoRepository;
     @Autowired

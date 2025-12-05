@@ -1,18 +1,22 @@
 package org.example.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.example.model.Titor;
 import org.example.repository.TitorRepository;
 import org.example.service.TitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+@RestController
+@RequestMapping(TitorController.MAPPING)
 public class TitorController {
+
+    public static final String MAPPING = "/baseTitor";
+
     @Autowired
     private TitorRepository TitorRepository;
     @Autowired
@@ -20,12 +24,12 @@ public class TitorController {
 
     @Operation(summary = "Método que crea Titor")
     @PostMapping("/titor")
-    public Titor crearTitor(Titor Titor) {
-        return TitorService.crearOuActualizarTitor(Titor);
+    public Titor crearTitor(@RequestBody Titor titor) {
+        return TitorService.crearOuActualizarTitor(titor);
     }
     @Operation(summary = "Método que elimina Titor")
     @PostMapping("/eliminar/{id}")
-    public void eliminarTitor(Long id) {
+    public void eliminarTitor(@PathVariable Long id) {
         TitorService.eliminarTitor(id);
     }
 
@@ -37,9 +41,9 @@ public class TitorController {
 
     @Operation(summary = "Obter Titor por ID")
     @GetMapping("/obter/{id}")
-    public ResponseEntity<Titor> obterTitorPorId(Long id) { // preguntar porq se retonra un responseEntity
+    public ResponseEntity<Titor> obterTitorPorId(@PathVariable Long id) {
         Optional<Titor> Titor = TitorService.obtenerTitorPorId(id);
-        return Titor.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()); //preguntar tambien esto
+        return Titor.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }

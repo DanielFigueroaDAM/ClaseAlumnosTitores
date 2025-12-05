@@ -3,11 +3,12 @@ package org.example.service;
 import org.example.model.Titor;
 import org.example.repository.TitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class TitorService {
     private final TitorRepository TitorRepository;
 

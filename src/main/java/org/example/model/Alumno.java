@@ -23,6 +23,7 @@ ON DELETE RESTRICT
 public class Alumno {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_alumno")
     private Long id;
     @Column(name = "nome", length = 100, nullable = false)
     private String nome;
